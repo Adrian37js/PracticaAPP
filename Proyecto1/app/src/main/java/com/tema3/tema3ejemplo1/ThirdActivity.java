@@ -24,10 +24,13 @@ import android.widget.Toast;
 
 
 public class ThirdActivity extends AppCompatActivity {
-    private EditText editTextPhone;
-    private EditText editTextWeb;
     private ImageButton imageButtonFinish;
     private Button button;
+    private String nombre;
+    private String mensaje;
+    private int edad2;
+    private String edad;
+    private String compartir;
 
     // private final int PHONE_CALL_CODE = 100;
     //private final int PICTURE_FROM_CAMERA = 50;
@@ -40,22 +43,18 @@ public class ThirdActivity extends AppCompatActivity {
 
         //Tomar los datos del intent (NOMBRE)
         Bundle bundle = getIntent().getExtras();
+
         if(bundle != null){
-            String nombre = bundle.getString("nombre");
-            String edad = bundle.getString("edad");
-            String mensaje = bundle.getString("mensaje");
-            Toast.makeText(ThirdActivity.this,nombre,Toast.LENGTH_SHORT).show();
-            Toast.makeText(ThirdActivity.this,edad,Toast.LENGTH_SHORT).show();
-            Toast.makeText(ThirdActivity.this,mensaje,Toast.LENGTH_SHORT).show();
+             nombre = bundle.getString("nombre");
+             edad2 = bundle.getInt("edad");
+             edad = String.valueOf(edad2);
+             mensaje = bundle.getString("mensaje");
         }else{
             Toast.makeText(ThirdActivity.this,"ERROR",Toast.LENGTH_SHORT).show();
 
         }
-
         imageButtonFinish = (ImageButton)findViewById(R.id.imageButtonFinish);
-
         button = (Button)findViewById(R.id.buttonGoSharing);
-        //int user_activity1 = getIntent().getExtra("nombre");
 
         imageButtonFinish.setOnClickListener(new View.OnClickListener(){
 
@@ -64,7 +63,15 @@ public class ThirdActivity extends AppCompatActivity {
 
                 imageButtonFinish.setVisibility(View.GONE);
                 button.setVisibility(View.VISIBLE);
-                //Toast.makeText(ThirdActivity.this, "Hola"++"¿Cómo llevas esos "++" años?", Toast.LENGTH_SHORT).show();
+                if(mensaje.contentEquals("Saludo")){
+                    Toast.makeText(ThirdActivity.this, "Hola " + nombre + " ¿Cómo llevas esos " + edad + " años?", Toast.LENGTH_SHORT).show();
+                    compartir = "Hola " + nombre + " ¿Cómo llevas esos " + edad + " años?";
+                }
+                if(mensaje.contentEquals("Despedida")) {
+                    Toast.makeText(ThirdActivity.this, "Espero verte pronto " + nombre + ", antes que cumplas " + edad + "...", Toast.LENGTH_SHORT).show();
+                    compartir = "Espero verte pronto " + nombre + ", antes que cumplas " + edad + "...";
+
+                }
 
 
             }
@@ -72,10 +79,18 @@ public class ThirdActivity extends AppCompatActivity {
 
         });
 
+        button.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
 
-// Pasaremos de la actividad actual a OtraActivity
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, compartir);
+                startActivity(Intent.createChooser(intent, "Share with"));
+            }
 
+        });
     }
 
 

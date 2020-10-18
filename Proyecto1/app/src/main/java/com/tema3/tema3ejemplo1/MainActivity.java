@@ -14,6 +14,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
     private Button btn;
     private EditText editTextUsuario;
+    private String usuario;
 
 
     @Override
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         text.setPadding(10,10,10,10);
 
         editTextUsuario = (EditText) findViewById(R.id.Usuario);
-        String usuario = editTextUsuario.getText().toString();
+         usuario = editTextUsuario.getText().toString();
 
         btn = (Button)findViewById(R.id.buttonMain);
 
@@ -40,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Acceder al segundo activity y mandar un String
 
-                if(editTextUsuario.getText().toString()!=null && !editTextUsuario.getText().toString().isEmpty()) {
-                    String usuario = editTextUsuario.getText().toString();
-
+                if(editTextUsuario.getText().toString()!=null || !editTextUsuario.getText().toString().isEmpty()) {
+                     usuario = editTextUsuario.getText().toString();
                     //Intent explícito, se le indica dónde se quiere ir
                     Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                     intent.putExtra("name",usuario);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Nombre vacio ", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

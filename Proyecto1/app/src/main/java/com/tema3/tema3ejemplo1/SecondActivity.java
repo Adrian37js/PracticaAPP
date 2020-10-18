@@ -53,7 +53,6 @@ public class SecondActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             name = bundle.getString("name");
-            Toast.makeText(SecondActivity.this,name,Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(SecondActivity.this,"ERROR",Toast.LENGTH_SHORT).show();
 
@@ -79,8 +78,6 @@ public class SecondActivity extends AppCompatActivity {
                 Toast.makeText(SecondActivity.this, mensaje, Toast.LENGTH_SHORT).show();
 
             }
-
-
         });
 
 
@@ -89,6 +86,7 @@ public class SecondActivity extends AppCompatActivity {
                     //hace un llamado a la perilla cuando se arrastra
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        edad = progress;
                         mostrarPorcentaje.setText(String.valueOf(progress)+" años");
                     }
                     //hace un llamado  cuando se toca la perilla
